@@ -1,6 +1,7 @@
 const defaultSpace = '&#183;',
       spaces       = document.getElementsByClassName("space"),
-      score        = {x: 0, o: 0};
+      score        = {x: 0, o: 0},
+      blankSpace   = '&nbsp;';
 
 function initialize () {
   for (let item of spaces) {
@@ -25,7 +26,6 @@ function onClick () {
 function resetBoard () {
   for (let item of spaces) {
     item.innerHTML = defaultSpace;
-    console.log('set space: ', item, ' to ', defaultSpace);
   }
 }
 
