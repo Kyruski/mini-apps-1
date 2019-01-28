@@ -1,0 +1,19 @@
+/* body {
+  color: blueviolet;
+} */
+
+table {
+  border-collapse: collapse
+}
+
+tr {
+  height: 50px;
+  padding: 0px;
+}
+
+td {
+  text-align: center;
+  vertical-align: center;
+  width: 50px;
+  border: 4px black solid;
+}
