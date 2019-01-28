@@ -31,7 +31,11 @@ function initialize() {
   document.getElementById('reset-board').addEventListener('click', resetBoard);
 }
 
-
+function swapPlayers () {
+  let temp = x;
+  x = o;
+  o = temp;
+}
 
 function placeInSpace(location) {
   location.innerHTML = (turn) ? 'X' : 'O';
@@ -54,9 +58,9 @@ function onWin(player) {
   writeMessage(`${winner.name} has won!`);
   winner.score++;
   if (player === 'X') {
-    document.getElementById('x-score').innerHTML = `${winner.score}`;
+    document.getElementById('player1-score').innerHTML = `${winner.score}`;
   } else {
-    document.getElementById('o-score').innerHTML = `${winner.score}`;
+    document.getElementById('player2-score').innerHTML = `${winner.score}`;
   }
   gameOver = true;
 }
