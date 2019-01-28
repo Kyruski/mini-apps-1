@@ -9,7 +9,7 @@ for (let item of spaces) {
 document.getElementById("reset-board").addEventListener("click", resetBoard);
 
 function placeInSpace (location, player) {
-  location.value = player;
+  location.innerHTML = player;
 }
 
 function onClick () {
@@ -22,7 +22,7 @@ function onClick () {
 
 function resetBoard () {
   for (let item of spaces) {
-    item.value = 'defaultSpace';
+    item.innerHTML = defaultSpace;
     console.log('set space: ', item, ' to ', defaultSpace);
   }
 }
