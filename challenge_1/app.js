@@ -1,12 +1,14 @@
-const defaultSpace = '&#183;';
+const defaultSpace = '&#183;',
+      spaces       = document.getElementsByClassName("space"),
+      score        = {x: 0, o: 0};
 
-
-const spaces = document.getElementsByClassName("space")
-for (let item of spaces) {
-  item.addEventListener("click", onClick);
+function initialize () {
+  for (let item of spaces) {
+    item.addEventListener("click", onClick);
+  }
+  
+  document.getElementById("reset-board").addEventListener("click", resetBoard);
 }
-
-document.getElementById("reset-board").addEventListener("click", resetBoard);
 
 function placeInSpace (location, player) {
   location.innerHTML = player;
@@ -14,9 +16,9 @@ function placeInSpace (location, player) {
 
 function onClick () {
   if (this.value === 'X' || this.value === 'O') {
-    document.getElementsByID("messages").value = 'That is an invalid move. Please try another space.';
+    document.getElementById("messages").innerHTML = 'That is an invalid move. Please try another space.';
   } else {
-    console.log('I got clicked');
+    document.getElementById("messages").innerHTML = 'I got clicked';
   }
 }
 
@@ -26,3 +28,5 @@ function resetBoard () {
     console.log('set space: ', item, ' to ', defaultSpace);
   }
 }
+
+initialize();
