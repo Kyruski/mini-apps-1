@@ -21,22 +21,28 @@ function initialize () {
   document.getElementById("reset-board").addEventListener("click", resetBoard);
 }
 
+function writeMessage (text) {
+  document.getElementById("messages").innerHTML = text;
+}
+
 function placeInSpace (location) {
   location.innerHTML = (turn) ? 'X' : 'O';
 }
 
 function changeTurn () {
-  turn = !turn;
-  document.getElementById("messages").innerHTML = (turn) ? 'It is X\'s turn.' : 'It is O\'s turn.';
-  turnNumber++;
-  if (turnNumber === 10) {
-    document.getElementById("messages").innerHTML = 'It\'s a tie! Game over.';
+  if (turnNumber === 9) {
+    writeMessage('It\'s a tie! Game over.');
     gameOver = true;
+  } else {
+    turnNumber++;
+    turn = !turn;
+    const text = (turn) ? 'It is X\'s turn.' : 'It is O\'s turn.';
+    writeMessage(text);
   }
 }
 
 function onWin (player) {
-  document.getElementById("messages").innerHTML = `${player} has won!`;
+  writeMessage(`${player} has won!`);
   score[player]++;
   if (player === 'X') {
     document.getElementById("x-score").innerHTML = `${score[player]}`;
@@ -48,12 +54,12 @@ function onWin (player) {
 
 function onClick () {
   if (gameOver) {
-    document.getElementById("messages").innerHTML = 'The game is over, please reset the board to play again.'
+    writeMessage('The game is over, please reset the board to play again.');
   } else if (this.innerHTML === 'X' || this.innerHTML === 'O') {
-    document.getElementById("messages").innerHTML = 'That is an invalid move. Please try another space.';
+    writeMessage('That is an invalid move. Please try another space.');
   } else {
     placeInSpace(this);
-    let winStatus = checkForWin();
+    const winStatus = checkForWin();
     if (winStatus[0]) {
       onWin(winStatus[1]);
     } else {
@@ -63,7 +69,7 @@ function onClick () {
 }
 
 function resetBoard () {
-  document.getElementById("messages").innerHTML = 'It is X\'s turn.';
+  writeMessage('It is X\'s turn.');
   turn = true;
   for (let item of spaces) {
     item.innerHTML = defaultSpace;
