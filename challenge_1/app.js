@@ -2,7 +2,7 @@ const defaultSpace = '&#183;',
       spaces       = document.getElementsByClassName("space"),
       score        = {x: 0, o: 0},
       blankSpace   = '&nbsp;';
-let turn = true; // True is for X, False is for O
+let   turn         = true; // True is for X, False is for O
 
 function initialize () {
   for (let item of spaces) {
@@ -15,13 +15,17 @@ function placeInSpace (location) {
   location.innerHTML = (turn) ? 'X' : 'O';
 }
 
+function changeTurn () {
+  turn = !turn;
+  document.getElementById("messages").innerHTML = (turn) ? 'It is X\'s turn.' : 'It is O\'s turn.';
+}
+
 function onClick () {
   if (this.innerHTML === 'X' || this.innerHTML === 'O') {
     document.getElementById("messages").innerHTML = 'That is an invalid move. Please try another space.';
   } else {
     placeInSpace(this);
-    turn = !turn;
-    document.getElementById("messages").innerHTML = (turn) ? 'It is X\'s turn.' : 'It is O\'s turn.';
+    changeTurn();
   }
 }
 
