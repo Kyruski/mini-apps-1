@@ -9,9 +9,21 @@ let x = player1;
 let o = player2;
 
 function promptPlayers () {
-  const player1 = prompt('Player 1, please enter your name: ');
+  while (true) {
+    let player1 = prompt('Player 1, please enter your name: ');
+    if (player1) {
+      break;
+    }
+    alert('Please enter a valid name');
+  }
   alert(`${player1} has joined`);
-  const player2 = prompt('Player 2, please enter your name: ');
+  while (true) {
+    let player2 = prompt('Player 2, please enter your name: ');
+    if (player2) {
+      break;
+    }
+    alert('Please enter a valid name');
+  }
   alert(`${player2} has joined`);
   return [player1, player2];
 }
