@@ -11,7 +11,8 @@ const defaultSpace = '&#183;',
                       [0,4,8],
                       [2,4,6]];
 let   turn         = true, // True is for X, False is for O
-      gameOver     = false;
+      gameOver     = false,
+      turnNumber   = 1;
 
 function initialize () {
   for (let item of spaces) {
@@ -27,6 +28,11 @@ function placeInSpace (location) {
 function changeTurn () {
   turn = !turn;
   document.getElementById("messages").innerHTML = (turn) ? 'It is X\'s turn.' : 'It is O\'s turn.';
+  turnNumber++;
+  if (turnNumber === 10) {
+    document.getElementById("messages").innerHTML = 'It\'s a tie! Game over.';
+    gameOver = true;
+  }
 }
 
 function onWin (player) {
@@ -63,6 +69,7 @@ function resetBoard () {
     item.innerHTML = defaultSpace;
   }
   gameOver = false;
+  turnNumber = 1;
 }
 
 function makeBoardArray () {
