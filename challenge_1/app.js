@@ -8,24 +8,27 @@ let turnNumber = 1;
 let x = player1;
 let o = player2;
 
+
 function promptPlayers () {
+  let p1;
   while (true) {
-    let player1 = prompt('Player 1, please enter your name: ');
-    if (player1) {
+    p1 = prompt('Player 1, please enter your name: ');
+    if (p1) {
       break;
     }
     alert('Please enter a valid name');
   }
-  alert(`${player1} has joined`);
+  alert(`${p1} has joined`);
+  let p2;
   while (true) {
-    let player2 = prompt('Player 2, please enter your name: ');
-    if (player2) {
+    p2 = prompt('Player 2, please enter your name: ');
+    if (p2) {
       break;
     }
     alert('Please enter a valid name');
   }
-  alert(`${player2} has joined`);
-  return [player1, player2];
+  alert(`${p2} has joined`);
+  return [p1, p2];
 }
 
 function writeMessage(text) {
