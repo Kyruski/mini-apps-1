@@ -1,6 +1,6 @@
 const defaultSpace = '&#183;',
       spaces       = document.getElementsByClassName("space"),
-      score        = {x: 0, o: 0},
+      score        = {X: 0, O: 0},
       blankSpace   = '&nbsp;',
       winLogic     = [[0,1,2],
                       [3,4,5],
@@ -10,7 +10,8 @@ const defaultSpace = '&#183;',
                       [2,5,8],
                       [0,4,8],
                       [2,4,6]];
-let   turn         = true; // True is for X, False is for O
+let   turn         = true, // True is for X, False is for O
+      gameOver     = false;
 
 function initialize () {
   for (let item of spaces) {
@@ -28,12 +29,30 @@ function changeTurn () {
   document.getElementById("messages").innerHTML = (turn) ? 'It is X\'s turn.' : 'It is O\'s turn.';
 }
 
+function onWin (player) {
+  document.getElementById("messages").innerHTML = `${player} has won!`;
+  score[player]++;
+  if (player === 'X') {
+    document.getElementById("x-score").innerHTML = `${score[player]}`;
+  } else {
+    document.getElementById("o-score").innerHTML = `${score[player]}`;
+  }
+  gameOver = true;
+}
+
 function onClick () {
-  if (this.innerHTML === 'X' || this.innerHTML === 'O') {
+  if (gameOver) {
+    document.getElementById("messages").innerHTML = 'The game is over, please reset the board to play again.'
+  } else if (this.innerHTML === 'X' || this.innerHTML === 'O') {
     document.getElementById("messages").innerHTML = 'That is an invalid move. Please try another space.';
   } else {
     placeInSpace(this);
-    changeTurn();
+    let winStatus = checkForWin();
+    if (winStatus[0]) {
+      onWin(winStatus[1]);
+    } else {
+      changeTurn();
+    }
   }
 }
 
@@ -43,6 +62,7 @@ function resetBoard () {
   for (let item of spaces) {
     item.innerHTML = defaultSpace;
   }
+  gameOver = false;
 }
 
 function makeBoardArray () {
@@ -56,11 +76,11 @@ function makeBoardArray () {
 function checkForWin () {
   const boardArray = makeBoardArray();
   for (let combo of winLogic) {
-    if (spaces[combo[0]].innerHTML === spaces[combo[1]].innerHTML && spaces[combo[1]].innerHTML === spaces[combo[2]].innerHTML) {
-      return true;
+    if (boardArray[combo[0]] === boardArray[combo[1]] && boardArray[combo[1]] === boardArray[combo[2]] && boardArray[combo[0]] !== '·') {
+      return [true, boardArray[combo[0]]];
     }
   }
-  return false;
+  return [false];
 }
 
 initialize();
