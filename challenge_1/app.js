@@ -1,58 +1,67 @@
-const defaultSpace = '&#183;',
-      spaces       = document.getElementsByClassName("space"),
-      score        = {X: 0, O: 0},
-      blankSpace   = '&nbsp;',
-      winLogic     = [[0,1,2],
-                      [3,4,5],
-                      [6,7,8],
-                      [0,3,6],
-                      [1,4,7],
-                      [2,5,8],
-                      [0,4,8],
-                      [2,4,6]];
-let   turn         = true, // True is for X, False is for O
-      gameOver     = false,
-      turnNumber   = 1;
+const spaces = document.getElementsByClassName('space');
+const winLogic = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
+const player1 = { name: '', score: 0 };
+const player2 = { name: '', score: 0 };
+let turn = true;// True is for X, False is for O
+let gameOver = false;
+let turnNumber = 1;
+let x = player1;
+let o = player2;
 
-function initialize () {
-  for (let item of spaces) {
-    item.addEventListener("click", onClick);
+function promptPlayers () {
+  const player1 = prompt('Player 1, please enter your name: ');
+  alert(`${player1} has joined`);
+  const player2 = prompt('Player 2, please enter your name: ');
+  alert(`${player2} has joined`);
+  return [player1, player2];
+}
+
+function writeMessage(text) {
+  document.getElementById('messages').innerHTML = text;
+}
+
+function initialize() {
+  [player1.name, player2.name] = promptPlayers();
+  document.getElementById('player1').innerHTML = `${player1.name}`;
+  document.getElementById('player2').innerHTML = `${player2.name}`;
+  writeMessage(`It is ${player1.name}'s turn.`);
+  for (const item of spaces) {
+    item.addEventListener('click', onClick);
   }
-  document.getElementById("reset-board").addEventListener("click", resetBoard);
+  document.getElementById('reset-board').addEventListener('click', resetBoard);
 }
 
-function writeMessage (text) {
-  document.getElementById("messages").innerHTML = text;
-}
 
-function placeInSpace (location) {
+
+function placeInSpace(location) {
   location.innerHTML = (turn) ? 'X' : 'O';
 }
 
-function changeTurn () {
+function changeTurn() {
   if (turnNumber === 9) {
     writeMessage('It\'s a tie! Game over.');
     gameOver = true;
   } else {
     turnNumber++;
     turn = !turn;
-    const text = (turn) ? 'It is X\'s turn.' : 'It is O\'s turn.';
+    const text = (turn) ? `It is ${player1.name}'s turn.` : `It is ${player2.name}'s turn.`;
     writeMessage(text);
   }
 }
 
-function onWin (player) {
-  writeMessage(`${player} has won!`);
-  score[player]++;
+function onWin(player) {
+  const winner = (player === 'X') ? x : o;
+  writeMessage(`${winner.name} has won!`);
+  winner.score++;
   if (player === 'X') {
-    document.getElementById("x-score").innerHTML = `${score[player]}`;
+    document.getElementById('x-score').innerHTML = `${winner.score}`;
   } else {
-    document.getElementById("o-score").innerHTML = `${score[player]}`;
+    document.getElementById('o-score').innerHTML = `${winner.score}`;
   }
   gameOver = true;
 }
 
-function onClick () {
+function onClick() {
   if (gameOver) {
     writeMessage('The game is over, please reset the board to play again.');
   } else if (this.innerHTML === 'X' || this.innerHTML === 'O') {
@@ -68,28 +77,28 @@ function onClick () {
   }
 }
 
-function resetBoard () {
-  writeMessage('It is X\'s turn.');
+function resetBoard() {
+  writeMessage(`It is ${player1.name}'s turn.`);
   turn = true;
-  for (let item of spaces) {
-    item.innerHTML = defaultSpace;
+  for (const item of spaces) {
+    item.innerHTML = '';
   }
   gameOver = false;
   turnNumber = 1;
 }
 
-function makeBoardArray () {
+function makeBoardArray() {
   const boardArray = [];
-  for (let item of spaces) {
+  for (const item of spaces) {
     boardArray.push(item.innerHTML);
   }
   return boardArray;
 }
 
-function checkForWin () {
+function checkForWin() {
   const boardArray = makeBoardArray();
-  for (let combo of winLogic) {
-    if (boardArray[combo[0]] === boardArray[combo[1]] && boardArray[combo[1]] === boardArray[combo[2]] && boardArray[combo[0]] !== '·') {
+  for (const combo of winLogic) {
+    if (boardArray[combo[0]] === boardArray[combo[1]] && boardArray[combo[1]] === boardArray[combo[2]] && boardArray[combo[0]] !== '') {
       return [true, boardArray[combo[0]]];
     }
   }
