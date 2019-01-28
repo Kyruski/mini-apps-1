@@ -1,7 +1,7 @@
 const spaces = document.getElementsByClassName('space');
 const winLogic = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
-const player1 = { name: '', score: 0 };
-const player2 = { name: '', score: 0 };
+const player1 = { name: '', score: 0, playerNumber: 1 };
+const player2 = { name: '', score: 0, playerNumber: 2 };
 let turn = true;// True is for X, False is for O
 let gameOver = false;
 let turnNumber = 1;
@@ -48,7 +48,7 @@ function changeTurn() {
   } else {
     turnNumber++;
     turn = !turn;
-    const text = (turn) ? `It is ${player1.name}'s turn.` : `It is ${player2.name}'s turn.`;
+    const text = (turn) ? `It is ${x.name}'s turn.` : `It is ${o.name}'s turn.`;
     writeMessage(text);
   }
 }
@@ -57,18 +57,21 @@ function onWin(player) {
   const winner = (player === 'X') ? x : o;
   writeMessage(`${winner.name} has won!`);
   winner.score++;
-  if (player === 'X') {
+  if (winner.playerNumber === 1) {
     document.getElementById('player1-score').innerHTML = `${winner.score}`;
   } else {
     document.getElementById('player2-score').innerHTML = `${winner.score}`;
   }
   gameOver = true;
+  if (player === 'O') {
+    swapPlayers();
+  }
 }
 
 function onClick() {
   if (gameOver) {
     writeMessage('The game is over, please reset the board to play again.');
-  } else if (this.innerHTML === 'X' || this.innerHTML === 'O') {
+  } else if (this.innerHTML !== '') {
     writeMessage('That is an invalid move. Please try another space.');
   } else {
     placeInSpace(this);
@@ -82,7 +85,7 @@ function onClick() {
 }
 
 function resetBoard() {
-  writeMessage(`It is ${player1.name}'s turn.`);
+  writeMessage(`It is ${x.name}'s turn.`);
   turn = true;
   for (const item of spaces) {
     item.innerHTML = '';
