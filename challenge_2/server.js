@@ -5,8 +5,6 @@ const express = require('express');
 const app = express();
 const path = require('path');
 
-let fileCounter = 0;
-
 function createKeyArray (obj) {
   const keyArray = [];
   for (let key of obj) {
@@ -37,18 +35,19 @@ function createValueArrays (obj) {
   return valuesArray;
 }
 
-function writeCSV (array) {
-  let csvArray = array.join(',').replace('"', '');
-  fs.appendFileSync(`csv/output${fileCounter}.csv`, csvArray)
+function writeCSV (arrayToConvert, returnArray) {
+  let csvArray = arrayToConvert.join(',').replace('"', '');
+  returnArray.push(csvArray);
+  return returnArray;
 }
 
 function main (obj) {
   fileCounter++;
   const keysArray = createKeyArray(obj);
   const valuesArray = createValueArrays(obj);
-  writeCSV(keysArray);
+  let finalArray = writeCSV(keysArray, []);
   for (let item of valuesArray) {
-    writeCSV(item);
+    finalArray = (writeCSV(item, finalArray));
   }
   //return file?
 }
