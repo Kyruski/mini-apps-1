@@ -1,6 +1,6 @@
 //takes in JSON
 //returns CSV
-
+const fs = require('fs');
 
 function createKeyArray (obj) {
   const keyArray = [];
@@ -30,4 +30,19 @@ function createValueArrays (obj) {
   }
   makeRowArray(obj);
   return valuesArray;
+}
+
+function writeCSV (array) {
+  let csvArray = array.join(',').replace('"', '');
+  fs.appendFileSync('csv/output.csv', csvArray)
+}
+
+function main (obj) {
+  const keysArray = createKeyArray(obj);
+  const valuesArray = createValueArrays(obj);
+  writeCSV(keysArray);
+  for (let item of valuesArray) {
+    writeCSV(item);
+  }
+  //return file?
 }
