@@ -2,6 +2,7 @@ const spaces = document.getElementsByClassName('space');
 const winLogic = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
 const player1 = { name: '', score: 0, playerNumber: 1 };
 const player2 = { name: '', score: 0, playerNumber: 2 };
+const xhr = new XMLHttpRequest();
 let turn = true;// True is for X, False is for O
 let gameOver = false;
 let turnNumber = 1;
@@ -29,6 +30,25 @@ function promptPlayers () {
   }
   alert(`${p2} has joined`);
   return [p1, p2];
+}
+
+function postScore (scoreObj, callback) {
+  $.ajax({
+    url: 'http://localhost:3000/',
+    type: 'POST',
+    data: JSON.stringify(scoreObj),
+    contentType: 'application/json',
+    success: callback,
+    error: (err1, err2, err3) => console.log('error posting', err1, ' and ', err2, ' and ', err3)
+  });
+}
+
+function sendWinner (winner, callback) {
+  if (winner === player1) {
+    postScore({ winner: 'player1'}, callback);
+  } else {
+    postScore({ winner: 'player2'}, callback);
+  }
 }
 
 function writeMessage(text) {
@@ -71,12 +91,10 @@ function changeTurn() {
 function onWin(player) {
   const winner = (player === 'X') ? x : o;
   writeMessage(`${winner.name} has won!`);
-  winner.score++;
-  if (winner.playerNumber === 1) {
-    document.getElementById('player1-score').innerHTML = `${winner.score}`;
-  } else {
-    document.getElementById('player2-score').innerHTML = `${winner.score}`;
-  }
+  sendWinner(winner, (obj) => {
+    document.getElementById('player1-score').innerHTML = `${obj.player1}`;
+    document.getElementById('player2-score').innerHTML = `${obj.player2}`;
+  });
   gameOver = true;
   if (player === 'O') {
     swapPlayers();
@@ -126,5 +144,7 @@ function checkForWin() {
   }
   return [false];
 }
+
+
 
 initialize();
