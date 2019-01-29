@@ -6,8 +6,6 @@ const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
 
-const pathName = path.join(__dirname + '/client/');
-
 let fileCounter = 0;
 
 function createKeyArray (obj) {
@@ -56,11 +54,11 @@ function main (obj) {
   //return file?
 }
 
-
+app.use( express.static( __dirname + '/client' ))
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(pathName + 'index.html'));
+  res.sendFile(path.join(pathName, 'client', 'index.html'));
 })
 
 app.listen(3000, () => {console.log('Listening to port 3000')});
