@@ -3,7 +3,6 @@
 const fs = require('fs');
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser');
 const path = require('path');
 
 let fileCounter = 0;
@@ -54,14 +53,15 @@ function main (obj) {
   //return file?
 }
 
-app.use( express.static( __dirname + '/client' ))
-app.use(bodyParser.json());
+app.use(express.static( __dirname + '/client'))
+app.use(express.json());
+app.use(express.urlencoded());
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(pathName, 'client', 'index.html'));
 })
 
-app.get('/submit', (req, res) => {
-  console.log(req.query.payload);
+app.post('/', (req, res) => {
+  console.log(req.body.payload);
 })
 app.listen(3000, () => {console.log('Listening to port 3000')});
