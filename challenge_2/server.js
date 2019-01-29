@@ -61,4 +61,7 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(pathName, 'client', 'index.html'));
 })
 
+app.get('/submit', (req, res) => {
+  console.log(req.query.payload);
+})
 app.listen(3000, () => {console.log('Listening to port 3000')});
