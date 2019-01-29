@@ -1,6 +1,13 @@
 //takes in JSON
 //returns CSV
 const fs = require('fs');
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+const path = require('path');
+
+const pathName = path.join(__dirname + '/client/');
+
 let fileCounter = 0;
 
 function createKeyArray (obj) {
@@ -48,3 +55,12 @@ function main (obj) {
   }
   //return file?
 }
+
+
+app.use(bodyParser.json());
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(pathName + 'index.html'));
+})
+
+app.listen(3000, () => {console.log('Listening to port 3000')});
