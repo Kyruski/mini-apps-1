@@ -1,6 +1,7 @@
 //takes in JSON
 //returns CSV
 const fs = require('fs');
+let fileCounter = 0;
 
 function createKeyArray (obj) {
   const keyArray = [];
@@ -34,10 +35,11 @@ function createValueArrays (obj) {
 
 function writeCSV (array) {
   let csvArray = array.join(',').replace('"', '');
-  fs.appendFileSync('csv/output.csv', csvArray)
+  fs.appendFileSync(`csv/output${fileCounter}.csv`, csvArray)
 }
 
 function main (obj) {
+  fileCounter++;
   const keysArray = createKeyArray(obj);
   const valuesArray = createValueArrays(obj);
   writeCSV(keysArray);
