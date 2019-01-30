@@ -1,0 +1,20 @@
+{
+  "name": "challenge_3",
+  "version": "1.0.0",
+  "description": "Making fullstack",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "me :)",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/preset-react": "^7.0.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "react": "^16.7.0"
+  }
+}
