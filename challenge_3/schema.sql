@@ -12,6 +12,7 @@ CREATE TABLE users (
   city text not null,
   state text not null,
   zipCode text not null,
+  phone text not null,
   creditCard text not null,
   expDate text not null,
   cvv text not null,

@@ -43,6 +43,7 @@ const Form2 = (props) => {
     const city = document.getElementById('city').value;
     const state = document.getElementById('state').value;
     const zipcode = document.getElementById('zipcode').value;
+    const phone = document.getElementById('phone').value;
     return [line1, line2, city, state, zipcode]
   }
   return (
@@ -54,6 +55,7 @@ const Form2 = (props) => {
         City <input type="text" id="city" name="city" placeholder="San Francisco" size="22" /><br></br>
         State <input type="text" id="state" name="state" placeholder="California" size="15" /><br></br>
         Zip Code <input type="text" id="zipcode" name="zipcode" placeholder="12345" size="6"/><br></br>
+        Phone Number <input type="text" id="phone" name="phone" placeholder="123-456-7890" size="13"/><br></br>
         <input type="submit" value="Next" onClick={(e) => {
           e.preventDefault();
           props.submitForm(grabValues());
@@ -129,6 +131,10 @@ const ConfirmationForm = (props) => {
             <td>{two.zipCode}</td>
           </tr>
           <tr>
+            <td>Phone Number</td>
+            <td>{two.phone}</td>
+          </tr>
+          <tr>
             <td>Credit Card #</td>
             <td>{three.creditCard}</td>
           </tr>
@@ -187,7 +193,8 @@ class App extends React.Component {
         line2: null,
         city: null,
         state: null,
-        zipCode: null
+        zipCode: null,
+        phone: null
       },
       form3vars: { //collects credit card #, expiry date, CVV, and billing zip code.
         creditCard: null,
@@ -228,7 +235,8 @@ class App extends React.Component {
         line2: array[1],
         city: array[2],
         state: array[3],
-        zipCode: array[4]
+        zipCode: array[4],
+        phone: array[5]
       }
     });
   }
@@ -256,7 +264,8 @@ class App extends React.Component {
         line2: null,
         city: null,
         state: null,
-        zipCode: null
+        zipCode: null,
+        phone: null
       },
       form3vars: {
         creditCard: null,
@@ -280,6 +289,7 @@ class App extends React.Component {
       city: two.city,
       state: two.state,
       zipCode: two.zipCode,
+      phone: two.phone,
       creditCard: three.creditCard,
       expDate: three.expDate,
       cvv: three.cvv,
