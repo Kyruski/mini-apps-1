@@ -1,5 +1,3 @@
-import { toUnicode } from "punycode";
-
 const MakeOrder = (props) => {
   return (
     <div>
@@ -72,13 +70,13 @@ const Form3 = (props) => {
     const expiration = document.getElementById('expiration').value;
     const cvv = document.getElementById('cvv').value;
     const billing = document.getElementById('billing').value;
-    return [credit, expiration, cvv, billing]
+    return [credit, expiration, cvv, billing];
   }
   return (
     <div>
       Form 3
       <form>
-        Credit-card # <input type="text" id="credit" name="creditcard" placeholder="1234-5678-9012-3456" size="25"/><br></br>
+        Credit Card # <input type="text" id="credit" name="creditcard" placeholder="1234-5678-9012-3456" size="25"/><br></br>
         Month/Year <input type="text" id="expiration" name="exp-Date" placeholder="mm/yyyy" size="8"/><br></br>
         CVV: <input type="text" id="cvv" name="cvv" placeholder="1234" size="5" /><br></br>
         Billing Zip Code: <input type="text" id="billing" name="billing" placeholder="12345" size="6" /><br></br>
@@ -92,6 +90,73 @@ const Form3 = (props) => {
     );
 };
 
+const ConfirmationForm = (props) => {
+  const one = props.data.form1vars;
+  const two = props.data.form2vars;
+  const three = props.data.form3vars;
+
+  return (
+    <div>
+      Is this information correct?
+      <table>
+        <tbody>
+          <tr>
+            <td>Name</td>
+            <td>{one.name}</td>
+          </tr>
+          <tr>
+            <td>Email</td>
+            <td>{one.email}</td>
+          </tr>
+          <tr>
+            <td>Address Line 1</td>
+            <td>{two.line1}</td>
+          </tr>
+          <tr>
+            <td>Address Line 2</td>
+            <td>{two.line2}</td>
+          </tr>
+          <tr>
+            <td>City</td>
+            <td>{two.city}</td>
+          </tr>
+          <tr>
+            <td>State</td>
+            <td>{two.state}</td>
+          </tr>
+          <tr>
+            <td>Zip Code</td>
+            <td>{two.zipCode}</td>
+          </tr>
+          <tr>
+            <td>Credit Card #</td>
+            <td>{three.creditCard}</td>
+          </tr>
+          <tr>
+            <td>Expiration Date</td>
+            <td>{three.expDate}</td>
+          </tr>
+          <tr>
+            <td>Billing Zip Code</td>
+            <td>{three.billingZip}</td>
+          </tr>
+        </tbody>
+      </table>
+      <form>
+        <input type="submit" value="Yes" onClick={(e) => {
+          e.preventDefault();
+          props.sendData();
+        }} />
+        <input type="submit" value="No" onClick={(e) => {
+          e.preventDefault();
+          props.resetData();
+          props.returnToForm1();
+        }} /> <br></br>
+      </form>
+    </div>
+    );
+};
+
 const OrderComplete = (props) => {
   return (
     <div>
@@ -99,7 +164,6 @@ const OrderComplete = (props) => {
       <form>
         <input type="submit" value="Return to Store" onClick={(e) => {
           e.preventDefault();
-          props.resetData();
           props.changeForm();
           }} /> <br></br>
       </form>
@@ -134,6 +198,12 @@ class App extends React.Component {
     }
   }
 
+  returnToForm1() {
+    this.setState({
+      currentForm: 1
+    });
+  }
+
   changeForm() {
       let nextForm = (this.state.currentForm + 1) % 5;
       this.setState({
@@ -166,7 +236,7 @@ class App extends React.Component {
   submitForm3(array) {
     this.setState({
       form3vars: {
-        ccNumber: array[0],
+        creditCard: array[0],
         expDate: array[1],
         cvv: array[2],
         billingZip: array[3]
@@ -219,13 +289,17 @@ class App extends React.Component {
 
   sendData() {
     const data = this.makeData();
-    fetch('/', {
+    fetch('/submit', {
       method: 'POST',
-      body: data,
+      body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json"
       },
-    })
+    }).then(data => {
+      console.log('success');
+      this.resetData();
+      this.changeForm();
+    }).catch(err => console.log('error, ', err));
   }
 
   render() {
@@ -241,7 +315,10 @@ class App extends React.Component {
         renderItem = <Form3 changeForm={this.changeForm.bind(this)} submitForm={this.submitForm3.bind(this)} />;
         break;
       case 4:
-        renderItem = <OrderComplete changeForm={this.changeForm.bind(this)} resetData={this.resetData.bind(this)} />;
+        renderItem = <ConfirmationForm data={this.state} returnToForm1={this.returnToForm1.bind(this)} sendData={this.sendData.bind(this)} resetData={this.resetData.bind(this)} />;
+        break;
+      case 5:
+        renderItem = <OrderComplete changeForm={this.changeForm.bind(this)} />;
         break;
       default: renderItem = <MakeOrder changeForm={this.changeForm.bind(this)} />;
     }
