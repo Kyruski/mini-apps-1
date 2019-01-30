@@ -1,3 +1,4 @@
+import { toUnicode } from "punycode";
 
 const MakeOrder = (props) => {
   return (
@@ -193,6 +194,37 @@ class App extends React.Component {
         cvv: null,
         billingZip: null
       }
+    })
+  }
+
+  makeData() {
+    const one = this.state.form1vars;
+    const two = this.state.form2vars;
+    const three = this.state.form3vars;
+    return {
+      name: one.name,
+      email: one.email,
+      password: one.password,
+      line1: two.line1,
+      line2: two.line2,
+      city: two.city,
+      state: two.state,
+      zipCode: two.zipCode,
+      creditCard: three.creditCard,
+      expDate: three.expDate,
+      cvv: three.cvv,
+      billingZip: three.billingZip
+    };
+  }
+
+  sendData() {
+    const data = this.makeData();
+    fetch('/', {
+      method: 'POST',
+      body: data,
+      headers: {
+        "Content-Type": "application/json"
+      },
     })
   }
 
