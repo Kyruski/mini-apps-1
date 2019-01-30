@@ -44,7 +44,7 @@ const Form2 = (props) => {
     const state = document.getElementById('state').value;
     const zipcode = document.getElementById('zipcode').value;
     const phone = document.getElementById('phone').value;
-    return [line1, line2, city, state, zipcode]
+    return [line1, line2, city, state, zipcode, phone]
   }
   return (
     <div>
