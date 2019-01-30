@@ -1,7 +1,7 @@
 const MakeOrder = (props) => {
   return (
     <div>
-      Make and Order
+      Make an Order
       <form>
         <input type="submit" value="Checkout" onClick={(e) => {
           e.preventDefault();
