@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js",
-    "babel": "./node_modules/.bin/babel client --watch --out-dir public --presets @babel/preset-react --source-maps inline"
+    "babel": "babel ./node_modules/.bin/babel client --watch --out-dir public --presets @babel/preset-react --source-maps inline"
   },
   "author": "me :)",
   "license": "ISC",
