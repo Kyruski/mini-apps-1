@@ -1,0 +1,10 @@
+html
+  head
+    title Make a CSV file from JSON
+  body
+    form(action="/" method="post")
+      span Insert your JSON text here:
+      input(type="text" name="payload")
+      input(type="submit" value="submit")
+    for item in csv
+      p= item

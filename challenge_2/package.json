@@ -1,5 +1,5 @@
 {
-  "name": "express",
+  "name": "challenge_2",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
@@ -8,5 +8,10 @@
   },
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "stuff",
+  "dependencies": {
+    "express": "^4.16.4",
+    "pug": "^2.0.3"
+  },
+  "devDependencies": {}
 }
