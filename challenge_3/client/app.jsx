@@ -4,7 +4,7 @@ const MakeOrder = (props) => {
     <div>
       Make and Order
       <div>
-        <a href="#" onClick={props.changeForm()}>Go to the next form</a>
+        <a href="#" onClick={props.changeForm()}>Checkout</a>
       </div>
     </div>
     );
@@ -15,7 +15,7 @@ const Form1 = (props) => {
     <div>
       Form 1
       <div>
-        <a href="#" onClick={props.changeForm()}>Go to the next form</a>
+        <a href="#" onClick={props.changeForm()}>Next</a>
       </div>
     </div>
     );
@@ -26,7 +26,7 @@ const Form2 = (props) => {
     <div>
       Form 2
       <div>
-        <a href="#" onClick={props.changeForm()}>Go to the next form</a>
+        <a href="#" onClick={props.changeForm()}>Next</a>
       </div>
     </div>
     );
@@ -37,7 +37,7 @@ const Form3 = (props) => {
     <div>
       Form 3
       <div>
-        <a href="#" onClick={props.changeForm()}>Go to the next form</a>
+        <a href="#" onClick={props.changeForm()}>Purchase</a>
       </div>
     </div>
     );
@@ -60,19 +60,28 @@ class App extends React.Component {
     super(props);
     this.state = {
       currentForm: 0,
-      form1vars: {
-
+      form1vars: { //F1 collects name, email, and password for account creation.
+        name: null,
+        email: null,
+        password: null
       },
-      form2vars: {
-
+      form2vars: { //F2 collects ship to address (line 1, line 2, city, state, zip code) and phone number.
+        line1: null,
+        line2: null,
+        city: null,
+        state: null,
+        zipCode: null
       },
-      form3vars: {
-
+      form3vars: { //F3 collects credit card #, expiry date, CVV, and billing zip code.
+        creditCard: null,
+        expDate: null,
+        cvv: null,
+        billingZip: null
       }
     }
   }
 
-  changeForm() {
+  changeForm() { //determines which the next form to be loaded between 0-4, looping back to 0 if it is at 4.
     return () => {
       let nextForm = (this.state.currentForm + 1) % 5;
       this.setState({
