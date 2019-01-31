@@ -5,6 +5,7 @@ const port = 3000;
 
 app.use(express.static('client/dist'));
 app.use(express.static('public'));
+app.use(express.static('client/images'));
 app.use(bodyParser.json());
 
 app.listen(port);
