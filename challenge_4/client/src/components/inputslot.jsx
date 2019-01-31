@@ -4,7 +4,7 @@ export default (props) => {
   let idValue = `input${props.inputNumber}`;
   return (
     <td id={idValue}>
-    {idValue}
+      <button value={'' + props.input}>Insert</button>
     </td>
   );
 }
