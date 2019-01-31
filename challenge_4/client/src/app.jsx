@@ -1,6 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Title from './components/title.jsx';
+import Score from './components/score.jsx'
+import Board from './components/board.jsx'
+import SlotSelector from './components/slotselector.jsx'
 
 class App extends React.Component {
 
@@ -14,7 +17,16 @@ class App extends React.Component {
   render() {
     return (
     <div>
-      <Title />
+      <div>
+        <Title />
+      </div>
+        <SlotSelector />
+      <div>
+        <Board />
+      </div>
+      <div>
+        <Score />
+      </div>
     </div>
     );
   }

@@ -1,0 +1,27 @@
+#board-table {
+  width: 450px;
+  border-collapse: collapse;
+  border: 5px black solid;
+}
+
+#board-table td {
+  text-align: center;
+  vertical-align: center;
+  height: 60px;
+  width: 60px;
+  border: 3px black solid;
+}
+
+#input-table {
+  width: 450px;
+  border-collapse: collapse;
+  border: 5px white solid;
+}
+
+#input-table td {
+  text-align: center;
+  vertical-align: center;
+  height: 60px;
+  width: 60px;
+  border: 3px white solid;
+}
