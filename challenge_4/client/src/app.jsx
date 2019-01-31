@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import Title from './components/title.jsx';
 
 class App extends React.Component {
 
@@ -11,7 +12,11 @@ class App extends React.Component {
   }
 
   render() {
-    return <div>Hello</div>;
+    return (
+    <div>
+      <Title />
+    </div>
+    );
   }
 }
 
