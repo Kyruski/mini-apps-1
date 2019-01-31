@@ -1,0 +1,10 @@
+CREATE DATABASE connectFour;
+
+USE connectFour;
+
+CREATE TABLE games (
+  userid INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  player1 TEXT NOT NULL,
+  player2 TEXT NOT NULL,
+  winner TEXT NOT NULL
+);
